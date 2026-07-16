@@ -22,7 +22,7 @@ SHIPBRIDGE_DRIVER=turbo
 TURBO_API_KEY=your-key-here
 TURBO_BASE_URL=https://api.turbo.com.eg/v1
 ```
-> لو الشركة بتستخدم username/password أو OAuth، شوف ملف `config/turbo.php`.
+> التفاصيل الكاملة للمفاتيح في `config/turbo.php`.
 
 ### ٣) ابعت شحنة
 ```php
@@ -58,6 +58,7 @@ composer require mohamedhekal/shipbridge mohamedhekal/shipbridge-turbo
 ```env
 SHIPBRIDGE_DRIVER=turbo
 TURBO_API_KEY=your-key-here
+TURBO_BASE_URL=https://api.turbo.com.eg/v1
 ```
 
 ```php
