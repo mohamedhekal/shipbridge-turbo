@@ -1,18 +1,5 @@
 # ShipBridge · Turbo
 
-<!-- shipbridge-marketing -->
-<p align="center">
-  <img src="docs/assets/hero.png" alt="ShipBridge carrier driver for Laravel" width="100%">
-</p>
-
-<p align="center">
-  <img src="docs/assets/developer-friendly.png" alt="Developer-friendly unified API" width="100%">
-</p>
-
-<!-- /shipbridge-marketing -->
-
-
-
 [![CI](https://github.com/mohamedhekal/shipbridge-turbo/actions/workflows/tests.yml/badge.svg)](https://github.com/mohamedhekal/shipbridge-turbo/actions)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Packagist](https://img.shields.io/packagist/v/mohamedhekal/shipbridge-turbo.svg)](https://packagist.org/packages/mohamedhekal/shipbridge-turbo)
@@ -108,13 +95,13 @@ Your Laravel app
 composer install && composer test
 ```
 
+---
+## License
+
+MIT © Mohamed Hekal
 
 ---
 
 <p align="center">
-  <img src="docs/assets/create-track-label.png" alt="Create, track, label, return, exchange" width="100%">
+  <img src="docs/assets/banner.png" alt="ShipBridge · turbo" width="100%">
 </p>
-
-## License
-
-MIT © Mohamed Hekal
