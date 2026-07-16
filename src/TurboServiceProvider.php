@@ -6,6 +6,7 @@ namespace Hekal\ShipBridge\Turbo;
 
 use Hekal\ShipBridge\Facades\ShipBridge;
 use Hekal\ShipBridge\Support\StatusNormalizer;
+use Hekal\ShipBridge\Turbo\Support\PayloadFactory;
 use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,7 +30,8 @@ final class TurboServiceProvider extends ServiceProvider
             $driverMap = $config['status_map'] ?? [];
 
             return new TurboDriver(
-                http: $app->make(HttpFactory::class),
+                client: new TurboClient($app->make(HttpFactory::class), $config),
+                payloads: new PayloadFactory($config),
                 normalizer: new StatusNormalizer(array_merge($aliases, $driverMap)),
                 config: $config,
             );

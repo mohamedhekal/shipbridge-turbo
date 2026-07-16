@@ -5,7 +5,9 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Packagist](https://img.shields.io/packagist/v/mohamedhekal/shipbridge-turbo.svg)](https://packagist.org/packages/mohamedhekal/shipbridge-turbo)
 
-**Turbo** shipping driver for [ShipBridge](https://github.com/mohamedhekal/shipbridge) · Region: **Egypt** / **مصر**
+**Turbo Egypt** shipping driver for [ShipBridge](https://github.com/mohamedhekal/shipbridge) · Region: **Egypt** / **مصر**
+
+Real External API: `https://backoffice.turbo-eg.com/external-api`
 
 ---
 
@@ -19,10 +21,11 @@ composer require mohamedhekal/shipbridge mohamedhekal/shipbridge-turbo
 ### ٢) حط مفاتيح Turbo في `.env`
 ```env
 SHIPBRIDGE_DRIVER=turbo
-TURBO_API_KEY=your-key-here
-TURBO_BASE_URL=https://api.turbo.com.eg/v1
+TURBO_AUTHENTICATION_KEY=your-authentication-key
+TURBO_MAIN_CLIENT_CODE=your-client-code
+TURBO_BASE_URL=https://backoffice.turbo-eg.com/external-api
 ```
-> التفاصيل الكاملة للمفاتيح في `config/turbo.php`.
+> التفاصيل في `config/turbo.php` و [`docs/GUIDE_AR.md`](docs/GUIDE_AR.md).
 
 ### ٣) ابعت شحنة
 ```php
@@ -32,19 +35,24 @@ use Hekal\ShipBridge\DTOs\CreateShipmentRequest;
 use Hekal\ShipBridge\DTOs\Parcel;
 
 $shipment = ShipBridge::driver('turbo')->createShipment(new CreateShipmentRequest(
-    origin: new Address('المخزن', 'شارع ١', 'القاهرة', 'EG'),
+    origin: new Address('المخزن', 'شارع ١', 'القاهرة', 'EG', phone: '01011111111'),
     destination: new Address('العميل', 'شارع النيل', 'الجيزة', 'EG', phone: '01000000000'),
-    parcels: [new Parcel(weightKg: 1.2)],
+    parcels: [new Parcel(weightKg: 1.2, description: 'ملابس')],
     reference: 'ORD-42',
+    metadata: [
+        'cod' => 250,
+        'government' => 'الجيزة',
+        'area' => 'الدقي',
+    ],
 ));
 
-echo $shipment->trackingNumber;
+echo $shipment->trackingNumber; // bar_code
 ```
 
 تتبع / ليبل / مرتجع:
 ```php
 ShipBridge::driver('turbo')->track($shipment->trackingNumber);
-ShipBridge::driver('turbo')->label($shipment->id);
+ShipBridge::driver('turbo')->label($shipment->trackingNumber); // رابط التتبع العام
 ```
 
 ---
@@ -57,15 +65,18 @@ composer require mohamedhekal/shipbridge mohamedhekal/shipbridge-turbo
 
 ```env
 SHIPBRIDGE_DRIVER=turbo
-TURBO_API_KEY=your-key-here
-TURBO_BASE_URL=https://api.turbo.com.eg/v1
+TURBO_AUTHENTICATION_KEY=your-authentication-key
+TURBO_MAIN_CLIENT_CODE=your-client-code
+TURBO_BASE_URL=https://backoffice.turbo-eg.com/external-api
 ```
 
 ```php
-ShipBridge::driver('turbo')->createShipment(...);
-ShipBridge::driver('turbo')->track('TRACKING');
-ShipBridge::driver('turbo')->label('SHIPMENT_ID');
+ShipBridge::driver('turbo')->createShipment(...); // POST /add-order
+ShipBridge::driver('turbo')->track('BARCODE');    // /get-status → /search-order
+ShipBridge::driver('turbo')->label('BARCODE');    // public tracking URL
 ```
+
+See [`docs/API.md`](docs/API.md) for the full External API contract.
 
 ## How it fits
 
@@ -76,7 +87,7 @@ Your Laravel app
  ShipBridge  (one API for all carriers)
       │
       ▼
- shipbridge-turbo  ← this package (Turbo)
+ shipbridge-turbo  ← this package (Turbo Egypt)
 ```
 
 ## Testing

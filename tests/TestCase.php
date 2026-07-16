@@ -21,7 +21,9 @@ abstract class TestCase extends Orchestra
     protected function defineEnvironment($app): void
     {
         $app['config']->set('shipbridge.default', 'turbo');
-        $app['config']->set('shipbridge.drivers.turbo.base_url', 'https://turbo.test/v1');
-        $app['config']->set('shipbridge.drivers.turbo.token', 'test-token');
+        $app['config']->set('shipbridge.drivers.turbo.base_url', 'https://backoffice.turbo-eg.com/external-api');
+        $app['config']->set('shipbridge.drivers.turbo.authentication_key', 'test-auth-key');
+        $app['config']->set('shipbridge.drivers.turbo.main_client_code', '55159');
+        $app['config']->set('shipbridge.drivers.turbo.return_amount', 35);
     }
 }
